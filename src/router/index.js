@@ -13,10 +13,12 @@ const routes = [{
     component: () => import('@/views/game')
   }, {
     path: 'grab-thirty',
-    component: () => import('@/views/game/grab-thirty')
+    component: () => import('@/views/game/grab-thirty'),
+    name: 'GrabThirty'
   }, {
     path: 'push-thirty',
-    component: () => import('@/views/game/push-thirty')
+    component: () => import('@/views/game/push-thirty'),
+    name: 'PushThirty'
   }, {
     path: 'statistics',
     component: () => import('@/views/statistics')

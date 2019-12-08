@@ -1,6 +1,5 @@
 import storage from './storage'
 
-
 const game_status_key = 'in_game';
 
 const gameStatus = {
@@ -16,4 +15,3 @@ const gameStatus = {
 };
 
 export default gameStatus;
-

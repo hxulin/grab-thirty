@@ -7,7 +7,7 @@
       </van-panel>
       <van-panel title="我报数（请选择）">
         <div class="person">
-          <div v-if="personNumber===29" class="successText">挑战成功。</div>
+          <div v-if="personNumber === 31" class="successText">挑战成功。</div>
           <div v-else>
             <van-button type="info" @click="nextStep(personNumber + 1)">{{ personNumber }}</van-button>
             <van-button v-if="personNumber < 30" type="primary" @click="nextStep(personNumber + 2)">{{ personNumber }}、{{ personNumber + 1 }}</van-button>
@@ -59,26 +59,29 @@
       nextStep(currentNumber) {
         if (currentNumber === 30) {
           this.computerText = currentNumber;
+          this.personNumber = currentNumber + 1;
           this.gameOver(true, '恭喜你，挑战成功。');
+        } else if (currentNumber === 31) {
+          this.gameOver(false, '很遗憾，挑战失败。');
         } else {
           this.currentNumber = currentNumber;
           if (this.currentNumber > 0) {
             this.computerText = this.currentNumber;
             this.personNumber = this.currentNumber + 1;
+            if (this.personNumber === 30) {
+              this.gameOver(false, '很遗憾，挑战失败。');
+            }
             if (this.currentNumber !== 1) {  // 留一线生机, 提高玩家获胜的概率
               if ((this.currentNumber + 1) % 3 === 0) {
                 return;
               }
-              if (currentNumber >= 30) {
-                this.gameOver(true, '恭喜你，挑战成功。');
-              }
               if ((this.currentNumber + 2) % 3 === 0) {
                 this.computerText += '、' + (this.currentNumber + 1);
+                if (this.currentNumber === 28) {
+                  this.gameOver(false, '很遗憾，挑战失败。');
+                }
                 this.personNumber ++;
                 return;
-              }
-              if (currentNumber >= 30) {
-                this.gameOver(true, '恭喜你，挑战成功。');
               }
             }
             if (this.currentNumber + Math.floor(Math.random() * 2) > this.currentNumber) {

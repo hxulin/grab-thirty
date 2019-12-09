@@ -141,7 +141,6 @@
         font-weight: bold;
       }
 
-
       .person {
         padding: 50px 16px;
         text-align: center;
@@ -162,7 +161,12 @@
         }
 
         .van-button--normal {
-          padding: 0 30px;
+          padding: 0;
+          width: 145px;
+
+          &:first-child {
+            width: 95px;
+          }
         }
 
         .failText {

@@ -7,7 +7,7 @@
       </div>
     </van-nav-bar>
     <van-panel title="项目说明" desc="基于 Vue 的前端练手项目，麻雀虽小，五脏俱全。">
-      <div class="content" style="padding: 10px 16px">
+      <div class="content">
         <p>源码：<a href="https://github.com/hxulin/grab-thirty">https://github.com/hxulin/grab-thirty</a></p>
         <p>仅供交流、学习、娱乐使用。</p>
       </div>
@@ -16,9 +16,7 @@
 </template>
 
 <script>
-  import { NavBar } from 'vant';
-  import { Icon } from 'vant';
-  import { Panel } from 'vant';
+  import { NavBar, Icon, Panel } from 'vant';
   export default {
     name: "About",
     components: {
@@ -50,6 +48,8 @@
     }
 
     .content {
+      padding: 10px 16px;
+
       a {
         color: #00E;
       }

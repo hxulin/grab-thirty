@@ -10,8 +10,7 @@
 </template>
 
 <script>
-  import { NavBar } from 'vant';
-  import { Icon } from 'vant';
+  import { NavBar, Icon } from 'vant';
   export default {
     name: "Statistics",
     components: {

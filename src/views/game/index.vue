@@ -59,7 +59,7 @@
   .game {
     height: calc(100vh - 50px);
     position: relative;
-    background-color: #EFEFEF;
+    background-color: #FDFDFD;
 
     .rule {
       padding: 5px 20px;

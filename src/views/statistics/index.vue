@@ -8,10 +8,10 @@
     </van-nav-bar>
     <div>
       <div class="chart">
-        <canvas id="myChart" height="220"></canvas>
+        <canvas id="myChart" height="227"></canvas>
       </div>
       <div class="chart">
-        <canvas id="myPie" height="220"></canvas>
+        <canvas id="myPie" height="227"></canvas>
       </div>
     </div>
   </div>
@@ -98,7 +98,7 @@
 
       chart.interval()
         .position('type*value')
-        .color('name')
+        .color('name', ['#2FC25B', '#FACC14', '#F04864'])
         .adjust({
           type: 'dodge',
           marginRatio: 0.05 // 设置分组间柱子的间距
@@ -116,36 +116,24 @@
       // 绘制饼状图
       drawPie() {
         const map = {
-          芳华: '40%',
-          妖猫传: '20%',
-          机器之血: '18%',
-          心理罪: '15%',
-          寻梦环游记: '5%',
-          其他: '2%'
+          胜率: '40%',
+          败率: '20%',
+          逃跑率: '18%',
         };
         const data = [{
-          name: '芳华',
+          index: 0,
+          name: '胜率',
           percent: 0.4,
           a: '1'
         }, {
-          name: '妖猫传',
+          index: 1,
+          name: '败率',
           percent: 0.2,
           a: '1'
         }, {
-          name: '机器之血',
+          index: 2,
+          name: '逃跑率',
           percent: 0.18,
-          a: '1'
-        }, {
-          name: '心理罪',
-          percent: 0.15,
-          a: '1'
-        }, {
-          name: '寻梦环游记',
-          percent: 0.05,
-          a: '1'
-        }, {
-          name: '其他',
-          percent: 0.02,
           a: '1'
         }];
         const chart = new F2.Chart({
@@ -173,7 +161,7 @@
         chart.axis(false);
         chart.interval()
           .position('a*percent')
-          .color('name', [ '#1890FF', '#13C2C2', '#2FC25B', '#FACC14', '#F04864', '#8543E0' ])
+          .color('name', [ '#2FC25B', '#FACC14', '#F04864' ])
           .adjust('stack')
           .style({
             lineWidth: 1,
@@ -210,13 +198,11 @@
       background-color: #FFF;
       margin-top: 2px;
       text-align: center;
-    }
 
-    .content {
-      background-color: #FFF;
-      margin-top: 2px;
-      text-align: center;
-      height: calc(100vh - 90px);
+      &:last-child {
+        background-color: #FFF;
+        height: calc(100vh - 330px);
+      }
     }
   }
 </style>

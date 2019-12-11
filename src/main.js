@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (from.fullPath === '/') {
-    gameStatus.exit();
+    gameStatus.exit(-1);
     next();
   } else {
     if (gameStatus.inProgress()) {
@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
         store.dispatch('SetMenuIndex', 0);
       }).catch(() => {
         // on cancels
-        gameStatus.exit();
+        gameStatus.exit(-1);
         router.replace(to);
         // next();
       });

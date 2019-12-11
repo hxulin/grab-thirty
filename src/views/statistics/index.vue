@@ -21,6 +21,7 @@
   import { NavBar, Icon } from 'vant';
   import F2 from '@antv/f2';
   import _ from 'lodash';
+  import gameStatistics from '@/utils/gameStatistics'
   export default {
     name: "Statistics",
     components: {
@@ -28,114 +29,54 @@
       [Icon.name]: Icon
     },
     mounted() {
-
-      const data = [{
-        name: '获胜',
-        type: '抢三十',
-        value: 18.9,
-      }, {
-        name: '获胜',
-        type: '推三十',
-        value: 28.8
-      }, {
-        name: '获胜',
-        type: '合计',
-        value: 39.2
-      }, {
-        name: '败北',
-        type: '抢三十',
-        value: 12.4
-      }, {
-        name: '败北',
-        type: '推三十',
-        value: 23.2
-      }, {
-        name: '败北',
-        type: '合计',
-        value: 34.5
-      }, {
-        name: '逃跑',
-        type: '抢三十',
-        value: 12.4
-      }, {
-        name: '逃跑',
-        type: '推三十',
-        value: 23.2
-      }, {
-        name: '逃跑',
-        type: '合计',
-        value: 34.5
-      }];
-      const chart = new F2.Chart({
-        id: 'myChart',
-        pixelRatio: window.devicePixelRatio
-      });
-      chart.source(data);
-      chart.tooltip({
-        custom: true, // 自定义 tooltip 内容框
-        onChange: function onChange(obj) {
-          const legend = chart.get('legendController').legends.top[0];
-          const tooltipItems = obj.items;
-          const legendItems = legend.items;
-          const map = {};
-          legendItems.forEach(function(item) {
-            map[item.name] = _.clone(item);
-          });
-          tooltipItems.forEach(function(item) {
-            const name = item.name;
-            const value = item.value;
-            if (map[name]) {
-              map[name].value = value;
-            }
-          });
-          legend.setItems(_.values(map));
-        },
-        onHide: function onHide() {
-          const legend = chart.get('legendController').legends.top[0];
-          legend.setItems(chart.getLegendItems().country);
-        }
-      });
-
-      chart.interval()
-        .position('type*value')
-        .color('name', ['#2FC25B', '#FACC14', '#F04864'])
-        .adjust({
-          type: 'dodge',
-          marginRatio: 0.05 // 设置分组间柱子的间距
-        });
-      chart.render();
-
+      this.drawChart();
       this.drawPie();
-
     },
     methods: {
       // 绘制柱状图
       drawChart() {
-
+        const data = gameStatistics.getChartData();
+        const chart = new F2.Chart({
+          id: 'myChart',
+          pixelRatio: window.devicePixelRatio
+        });
+        chart.source(data);
+        chart.tooltip({
+          custom: true, // 自定义 tooltip 内容框
+          onChange: function onChange(obj) {
+            const legend = chart.get('legendController').legends.top[0];
+            const tooltipItems = obj.items;
+            const legendItems = legend.items;
+            const map = {};
+            legendItems.forEach(function(item) {
+              map[item.name] = _.clone(item);
+            });
+            tooltipItems.forEach(function(item) {
+              const name = item.name;
+              const value = item.value;
+              if (map[name]) {
+                map[name].value = value;
+              }
+            });
+            legend.setItems(_.values(map));
+          },
+          onHide: function onHide() {
+            const legend = chart.get('legendController').legends.top[0];
+            legend.setItems(chart.getLegendItems().country);
+          }
+        });
+        chart.interval()
+          .position('type*value')
+          .color('name', ['#2FC25B', '#FACC14', '#F04864'])
+          .adjust({
+            type: 'dodge',
+            marginRatio: 0.05 // 设置分组间柱子的间距
+          });
+        chart.render();
       },
       // 绘制饼状图
       drawPie() {
-        const map = {
-          胜率: '40%',
-          败率: '20%',
-          逃跑率: '18%',
-        };
-        const data = [{
-          index: 0,
-          name: '胜率',
-          percent: 0.4,
-          a: '1'
-        }, {
-          index: 1,
-          name: '败率',
-          percent: 0.2,
-          a: '1'
-        }, {
-          index: 2,
-          name: '逃跑率',
-          percent: 0.18,
-          a: '1'
-        }];
+        const data = gameStatistics.getPieData();
         const chart = new F2.Chart({
           id: 'myPie',
           pixelRatio: window.devicePixelRatio
@@ -143,14 +84,16 @@
         chart.source(data, {
           percent: {
             formatter: function formatter(val) {
-              return val * 100 + '%';
+              let element = data.find(item => item.name === val);
+              return element.percent * 100 + '%';
             }
           }
         });
         chart.legend({
           position: 'right',
           itemFormatter: function itemFormatter(val) {
-            return val + '  ' + map[val];
+            let element = data.find(item => item.name === val);
+            return element.text + '  ' + (element.percent * 100) + '%';
           }
         });
         chart.tooltip(false);
@@ -175,7 +118,6 @@
               easing: 'bounceOut'
             }
           });
-
         chart.render();
       }
     }

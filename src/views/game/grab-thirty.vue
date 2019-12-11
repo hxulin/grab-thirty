@@ -51,21 +51,22 @@
         return;
       }
       this.$store.dispatch('SetMenuIndex', 0);
-      gameStatus.enter();
+      // 进入游戏时设置逃跑状态
+      gameStatus.enter(2);
       this.nextStep(startNumber);
     },
     methods: {
       // 下一步
       nextStep(currentNumber) {
         if (currentNumber === 31) {
-          this.gameOver(true, '恭喜你，挑战成功。');
+          this.gameOver(0, '恭喜你，挑战成功。');
         } else {
           this.currentNumber = currentNumber;
           if (this.currentNumber > 0) {
             this.computerText = this.currentNumber;
             this.personNumber = this.currentNumber + 1;
             if (currentNumber >= 29) {
-              this.gameOver(false, '很遗憾，挑战失败。');
+              this.gameOver(1, '很遗憾，挑战失败。');
             }
             if (this.currentNumber % 3 === 0) {
               return;
@@ -86,8 +87,8 @@
         }
       },
       // 游戏结束
-      gameOver(success, msg) {
-        gameStatus.exit();
+      gameOver(result, msg) {
+        gameStatus.exit(result);
         Dialog.confirm({
           message: msg,
           cancelButtonText: '返回主页',
@@ -102,7 +103,8 @@
       },
       // 再来一局
       startGame(item) {
-        gameStatus.enter();
+        // 进入游戏时设置逃跑状态
+        gameStatus.enter(2);
         this.nextStep(item.index);
       },
       // 退出游戏, 返回主页

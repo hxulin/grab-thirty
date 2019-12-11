@@ -1,6 +1,6 @@
 <template>
   <div class="game">
-    <van-tabs v-model="active" :color="colors[active]">
+    <van-tabs v-model="active" swipeable :color="colors[active]">
       <van-tab title="抢三十">
         <div class="rule">
           <p>两个人轮流报数，每个人一次可以报一个或者两个数。从 1 开始报起，谁要是报到数字 30 就判谁赢。</p>
@@ -57,13 +57,13 @@
 
 <style lang="scss" scoped>
   .game {
-    height: calc(100vh - 50px);
     position: relative;
-    background-color: #FDFDFD;
 
     .rule {
       padding: 5px 20px;
       font-size: 18px;
+      background-color: #FDFDFD;
+      height: calc(100vh - 104px);
 
       p {
         line-height: 1.5;
@@ -72,7 +72,7 @@
 
     .start-btn {
       position: absolute;
-      bottom: 30px;
+      bottom: 40px;
       left: 50%;
       margin-left: -54.9px;
     }

@@ -85,7 +85,8 @@
           percent: {
             formatter: function formatter(val) {
               let element = data.find(item => item.name === val);
-              return element.percent * 100 + '%';
+              let percentText = String(element.percent * 100);
+              return (percentText.length > 5 ? percentText.substring(0, 5) : percentText) + '%';
             }
           }
         });
@@ -93,7 +94,8 @@
           position: 'right',
           itemFormatter: function itemFormatter(val) {
             let element = data.find(item => item.name === val);
-            return element.text + '  ' + (element.percent * 100) + '%';
+            let percentText = String(element.percent * 100);
+            return element.text + '  ' + (percentText.length > 5 ? percentText.substring(0, 5) : percentText) + '%';
           }
         });
         chart.tooltip(false);

@@ -23,7 +23,7 @@
       [NavBar.name]: NavBar,
       [Icon.name]: Icon,
       [Panel.name]: Panel
-    },
+    }
   }
 </script>
 

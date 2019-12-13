@@ -37,19 +37,20 @@
     methods: {
       // 获取元数据
       getMetadata() {
-        const vm = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise(resolve => {
           if (this.total < 100) {
             request({
               url: '/metadata.json?t=' + new Date().getTime(),
               method: 'get',
             }).then(result => {
-              vm.total = result.total;
-              // console.log(result.total);
-              resolve(0);
+              this.total = result.total;
+              resolve();
             }).catch(() => {
-              reject(-1);
+              // 放行, 忽略错误
+              resolve();
             });
+          } else {
+            resolve();
           }
         });
       },
@@ -61,12 +62,13 @@
       onLoad() {
 
           this.getMetadata().then(() => {
+            console.log(this.total);
             this.getData();
           });
 
-        console.log(this.total);
+        //console.log(this.total);
 
-        console.log((Math.abs((Date.parse(new Date().format('yyyy-MM-dd')) - Date.parse(this.firstDate))/86400000) + 1) % this.total);
+        //console.log((Math.abs((Date.parse(new Date().format('yyyy-MM-dd')) - Date.parse(this.firstDate))/86400000) + 1) % this.total);
 
         /*request({
           url: '/metadata.json11?',

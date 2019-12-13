@@ -7,16 +7,14 @@
       </div>
     </van-nav-bar>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <van-panel v-for="item in list" :key="item" title="2019-12-12">
-        <div>某人到商店买点钞机，挑了两台最贵的，同时问了一下老板为什么这种型号的贵一些，老板告诉他因为这是全智能语音型的。
-          付款时他让老板就用这两台点钞机点钞，两台点钞机都报出了准确的数字，他认为语音功能还不错...</div>
-      </van-panel>
+      <van-panel v-for="item in list" :key="item.hashId" title="2019-12-12">{{ item.content }}</van-panel>
     </van-list>
   </div>
 </template>
 
 <script>
-  import { NavBar, Icon, List, Panel } from 'vant';
+  import { NavBar, Icon, List, Panel, Toast } from 'vant';
+  import request from '@/utils/request'
   export default {
     name: "Joke",
     components: {
@@ -27,26 +25,57 @@
     },
     data() {
       return {
-        list: [],
+        // 最大文件数, 对应翻页数
+        total: 99,
+        // 初始日期, 标识在此时间前没有数据
+        firstDate: '2019-12-12',
         loading: false,
-        finished: false
+        finished: false,
+        list: []
       }
     },
     methods: {
+      // 获取元数据
+      getMetadata() {
+        const vm = this;
+        return new Promise(function (resolve, reject) {
+          if (this.total < 100) {
+            request({
+              url: '/metadata.json?t=' + new Date().getTime(),
+              method: 'get',
+            }).then(result => {
+              vm.total = result.total;
+              // console.log(result.total);
+              resolve(0);
+            }).catch(() => {
+              reject(-1);
+            });
+          }
+        });
+      },
+      // 请求列表数据
+      getData() {
+        console.log(11111111111)
+      },
+      // 加载数据, 异步方法, 需要同步请求元数据
       onLoad() {
-        // 异步更新数据
-        setTimeout(() => {
-          for (let i = 0; i < 10; i++) {
-            this.list.push(this.list.length + 1);
-          }
-          // 加载状态结束
-          this.loading = false;
 
-          // 数据全部加载完成
-          if (this.list.length >= 40) {
-            this.finished = true;
-          }
-        }, 500);
+          this.getMetadata().then(() => {
+            this.getData();
+          });
+
+        console.log(this.total);
+
+        console.log((Math.abs((Date.parse(new Date().format('yyyy-MM-dd')) - Date.parse(this.firstDate))/86400000) + 1) % this.total);
+
+        /*request({
+          url: '/metadata.json11?',
+          method: 'get',
+        }).then(result => {
+          console.log(result);
+        }).catch(() => {
+        });*/
+          Toast.fail('获取数据失败');
       }
     }
   }

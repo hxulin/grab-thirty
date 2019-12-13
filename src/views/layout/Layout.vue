@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <router-view/>
-    <van-tabbar v-model="menuIndex" @change="onChange">
+    <van-tabbar v-model="menuIndex" @change="onChange" safe-area-inset-bottom>
       <van-tabbar-item icon="fire-o">小游戏</van-tabbar-item>
       <van-tabbar-item icon="bar-chart-o">战况统计</van-tabbar-item>
       <van-tabbar-item icon="smile-comment-o">开心一刻</van-tabbar-item>

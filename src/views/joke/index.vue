@@ -5,7 +5,11 @@
         <van-icon class="title-icon" name="smile-comment-o"></van-icon>
         <span>开心一刻</span>
       </div>
+      <van-button slot="right" type="default" @click="showMessage">
+        <van-icon name="envelop-o"></van-icon>
+      </van-button>
     </van-nav-bar>
+    <van-divider dashed>茶余饭后，每天为你海选10篇小笑话</van-divider>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了"
               :error.sync="error" error-text="请求失败，点击重新加载" @load="onLoad">
       <van-panel v-for="(item, index) in list" :key="index" :title="item.updateTime">{{ item.content }}</van-panel>
@@ -14,7 +18,7 @@
 </template>
 
 <script>
-  import {NavBar, Icon, List, Panel} from 'vant';
+  import {NavBar, Icon, Button, Dialog, List, Panel, Divider} from 'vant';
   import request from '@/utils/request'
 
   export default {
@@ -22,8 +26,10 @@
     components: {
       [NavBar.name]: NavBar,
       [Icon.name]: Icon,
+      [Button.name]: Button,
       [List.name]: List,
-      [Panel.name]: Panel
+      [Panel.name]: Panel,
+      [Divider.name]: Divider
     },
     data() {
       return {
@@ -42,6 +48,17 @@
       }
     },
     methods: {
+      // 板块说明
+      showMessage() {
+        Dialog.alert({
+          title: '板块说明',
+          message: '本版块内容由爬虫程序从网络爬取。个人精力有限，部分内容发布前未进行人工筛选、甄别，可能存在小部分偏离主题，还请各位看客一笑而过，雅x共赏~',
+          messageAlign: 'left',
+          confirmButtonText: '朕知道了'
+        }).then(() => {
+          // on close
+        });
+      },
       // 获取元数据
       getMetadata() {
         return new Promise(resolve => {
@@ -103,6 +120,26 @@
       color: #323233;
       position: relative;
       top: -2px
+    }
+
+    .van-nav-bar__right {
+      right: 0;
+
+      .van-button--normal {
+        font-size: 16px;
+        height: 50px;
+        border: none;
+      }
+
+      .van-icon {
+        font-size: 16px;
+        color: #323233;
+      }
+    }
+
+    .van-divider {
+      background-color: #FFF;
+      margin: 2px 0 0;
     }
 
     .van-list {

@@ -29,7 +29,6 @@
       [NavBar.name]: NavBar,
       [Panel.name]: Panel,
       [Button.name]: Button,
-      [Dialog.name]: Dialog,
       [ActionSheet.name]: ActionSheet
     },
     data() {

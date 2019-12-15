@@ -51,7 +51,7 @@
       // 板块说明
       showMessage() {
         Dialog.alert({
-          title: '板块说明',
+          title: '版块说明',
           message: '本版块内容由爬虫程序从网络爬取。个人精力有限，部分内容发布前未进行人工筛选、甄别，可能存在小部分偏离主题，还请各位看客一笑而过，雅x共赏~',
           messageAlign: 'left',
           confirmButtonText: '朕知道了'

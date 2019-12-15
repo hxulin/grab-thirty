@@ -144,6 +144,7 @@
 
     .van-list {
       margin-bottom: 50px;
+      background-color: #EFEFEF;
     }
 
     .van-panel {
